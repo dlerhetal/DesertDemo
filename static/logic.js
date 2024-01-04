@@ -1,25 +1,75 @@
-// Creating the map object
+// Creating the Map object
 var Map = L.map("map", {
   center: [36.156470, -86.788350],
   zoom: 11
 });
 
 // Adding the tile layer
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+L.tileLayer('https://{s}.tile.openstreetMap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(Map);
 
 // Use this link to get the GeoJSON data.
-var link = "data/map.geojson";
+var link = "data/Map.geojson";
 // The function that will determine the color of a NAME_x based on the borough that it belongs to
-function chooseColor(poverty) {
-  if (poverty == 0) return "Wheat";
-  else if (poverty < 2) return "Goldenrod";
-  else if (poverty < 4) return "Peru";
-  else if (poverty < 8) return "Chocolate";
-  else if (poverty < 13) return "orange";
-  else if (poverty < 20) return "SaddleBrown";
-  else return "Maroon";
+function chooseColor(Poverty) {
+  if (Poverty == 0) return "#BFEFFF"; // Pale Blue
+  else if (Poverty < 6) return "#66B3FF"; // Light Blue
+  else if (Poverty < 11) return "#3366FF"; // Medium Blue
+  else if (Poverty < 16) return "#0000CC"; // Dark Blue
+  else if (Poverty < 21) return "#000099"; // Very Dark Blue
+  else if (Poverty < 26) return "#000066"; // Super Dark Blue
+  else return "#330066"; // Dark Purple
+}
+
+// Create a legend control
+var legend = L.control({ position: 'bottomright' });
+// Add legend to the Map
+legend.onAdd = function (Map) {
+    var div = L.DomUtil.create('div', 'info legend');
+    div.innerHTML += '<h4 style="margin-bottom: 10px;">Poverty Rate <hr> &lt; $10K</h4>';
+    var colors = ["#BFEFFF", "#66B3FF", "#3366FF", "#0000CC", "#000099", "#000066", "#330066"];
+        labels = [];
+    // Loop through colors and generate a label with the corresponding poverty rate range
+    for (var i = 0; i < colors.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + colors[i] + '"></i> ' +
+            chooseColorLabel(colors[i]) + '<br>';
+    }
+    // Add styling to the legend
+    div.style.border = '2px solid #ccc';
+    div.style.background = 'rgba(255, 255, 255, 0.8)';
+    div.style.padding = '8px';
+    return div;
+};
+// Add legend to the Map
+legend.addTo(Map);
+// Function to get legend labels based on color
+function chooseColorLabel(color) {
+    // Extract the poverty rate range from the color function
+    var povertyRange = getPovertyRange(color);
+    return '<span style="color: ' + color + ';">' + povertyRange + '</span>';
+}
+// Function to get poverty rate range based on color
+function getPovertyRange(color) {
+  switch (color) {
+      case "#BFEFFF":
+          return "0%";
+      case "#66B3FF":
+          return "0% - 2%";
+      case "#3366FF":
+          return "2% - 4%";
+      case "#0000CC":
+          return "4% - 8%";
+      case "#000099":
+          return "8% - 13%";
+      case "#000066":
+          return "13% - 20%";
+      case "#330066":
+          return "20%+";
+      default:
+          return "";
+  }
 }
 
 // Getting our GeoJSON data
@@ -38,16 +88,16 @@ d3.json(link).then(function(data) {
     },
     // This is called on each feature.
     onEachFeature: function(feature, layer) {
-      // Set the mouse events to change the map styling.
+      // Set the mouse events to change the Map styling.
       layer.on({
-        // When a user's mouse cursor touches a map feature, the mouseover event calls this function, which makes that feature's opacity change to 90% so that it stands out.
+        // When a user's mouse cursor touches a Map feature, the mouseover event calls this function, which makes that feature's opacity change to 90% so that it stands out.
         mouseover: function(event) {
           layer = event.target;
           layer.setStyle({
             fillOpacity: 0.9
           });
         },
-        // When the cursor no longer hovers over a map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
+        // When the cursor no longer hovers over a Map feature (that is, when the mouseout event occurs), the feature's opacity reverts back to 50%.
         mouseout: function(event) {
           layer = event.target;
           layer.setStyle({
@@ -76,7 +126,7 @@ fetch('data/grocery.json')
     locations = grocery;
     console.log(locations); // Check the value of locations
 
-// Add markers to the map based on rating
+// Add markers to the Map based on rating
 locations.forEach(function (location) {
 
     var radius = 6; // Default radius
@@ -135,11 +185,20 @@ function getColor(rating) {
 
 var layers = {};
 
-// Create a custom control for the map and satellite toggle
-var mapToggleControl = L.control({ position: 'topright' });
 
-// Add control to toggle map and satellite views
-// mapToggleControl.addTo(Map);
+
+
+
+
+
+// Create a custom control for the Map and satellite toggle
+var MapToggleControl = L.control({ position: 'topright' });
+
+
+
+
+// Add control to toggle Map and satellite views
+// MapToggleControl.addTo(Map);
 
 // Create layers control for rating layers
 var ratingLayersControl = L.control.layers(null, layers, { collapsed: false }).addTo(Map);
