@@ -57,10 +57,9 @@ d3.json(link).then(function(data) {
         }
       });
       // Giving each feature a popup with information that's relevant to it
-      layer.bindPopup("<h1>" + "Census Tract: " + feature.properties.NAME_x + "</h1> <hr> <h2>" + "Poverty Rate: " + feature.properties.Poverty + "<br>" + 
-      "Households: " + feature.properties.Households + "<br>" + "Median Income: " + feature.properties.Median + "<br>" + "Median Income: " + feature.properties.Mean + 
-      "<br>" + "Food Desert: " + feature.properties.Desert + 
-      "</h2>");
+      layer.bindPopup("<h1>" + "Census Tract: " + feature.properties.NAME_x + "</h1> <hr> <h2>" + "Poverty Rate: " + feature.properties.Poverty + "% " +
+      "<br>" + "Households: " + feature.properties.Households.toLocaleString("en-US") + "<br>" + "Average Income: " + 
+      feature.properties.Mean.toLocaleString("en-US") + "<br>" + "Food Desert: " + feature.properties.Desert + "</h2>");
 
     }
   }).addTo(myMap);
