@@ -1,5 +1,5 @@
 // Creating the Map object
-var Map = L.map("map", {
+var myMap = L.map("map", {
   center: [36.156470, -86.788350],
   zoom: 11
 });
@@ -7,10 +7,10 @@ var Map = L.map("map", {
 // Adding the tile layer
 L.tileLayer('https://{s}.tile.openstreetMap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetMap.org/copyright">OpenStreetMap</a> contributors'
-}).addTo(Map);
+}).addTo(myMap);
 
 // Use this link to get the GeoJSON data.
-var link = "data/Map.geojson";
+var link = "data/map.geojson";
 // The function that will determine the color of a NAME_x based on the borough that it belongs to
 function chooseColor(Poverty) {
   if (Poverty == 0) return "#BFEFFF"; // Pale Blue
@@ -25,7 +25,7 @@ function chooseColor(Poverty) {
 // Create a legend control
 var legend = L.control({ position: 'bottomright' });
 // Add legend to the Map
-legend.onAdd = function (Map) {
+legend.onAdd = function (myMap) {
     var div = L.DomUtil.create('div', 'info legend');
     div.innerHTML += '<h4 style="margin-bottom: 10px;">Poverty Rate <hr> &lt; $10K</h4>';
     var colors = ["#BFEFFF", "#66B3FF", "#3366FF", "#0000CC", "#000099", "#000066", "#330066"];
@@ -43,7 +43,7 @@ legend.onAdd = function (Map) {
     return div;
 };
 // Add legend to the Map
-legend.addTo(Map);
+legend.addTo(myMap);
 // Function to get legend labels based on color
 function chooseColorLabel(color) {
     // Extract the poverty rate range from the color function
@@ -106,7 +106,7 @@ d3.json(link).then(function(data) {
         },
         // When a feature (NAME_x) is clicked, it enlarges to fit the screen.
         click: function(event) {
-          Map.fitBounds(event.target.getBounds());
+          myMap.fitBounds(event.target.getBounds());
         }
       });
       // Giving each feature a popup with information that's relevant to it
@@ -115,7 +115,7 @@ d3.json(link).then(function(data) {
       feature.properties.Mean.toLocaleString("en-US") + "<br>" + "Food Desert: " + feature.properties.Desert + "</h2>");
 
     }
-  }).addTo(Map);
+  }).addTo(myMap);
 });
 // Sample data (replace this with your actual data)
 var locations;
@@ -159,7 +159,7 @@ locations.forEach(function (location) {
   
     // Check if the layer exists, if not, create one
     if (!layers[location.rating]) {
-      layers[location.rating] = L.layerGroup().addTo(Map);
+      layers[location.rating] = L.layerGroup().addTo(myMap);
     }
   
     // Add the marker to the respective rating layer
@@ -201,4 +201,4 @@ var MapToggleControl = L.control({ position: 'topright' });
 // MapToggleControl.addTo(Map);
 
 // Create layers control for rating layers
-var ratingLayersControl = L.control.layers(null, layers, { collapsed: false }).addTo(Map);
+var ratingLayersControl = L.control.layers(null, layers, { collapsed: false }).addTo(myMap);
