@@ -141,7 +141,7 @@ locations.forEach(function (location) {
     } else if (location.rating >= 3) {
       radius = 4;
     } else {
-      radius = 2;
+      radius = 3;
     }
 
     var marker = L.circleMarker([location.latitude, location.longitude], {
@@ -171,13 +171,13 @@ locations.forEach(function (location) {
 
 function getColor(rating) {
   if (rating >= 4.5) {
-    return 'green';
+    return 'red';
   } else if (rating >= 4) {
-    return 'lime';
+    return 'red';
   } else if (rating >= 3.5) {
-    return 'yellow';
+    return 'red';
   } else if (rating >= 3) {
-    return 'orange';
+    return 'red';
   } else {
     return 'red';
   }
@@ -185,17 +185,8 @@ function getColor(rating) {
 
 var layers = {};
 
-
-
-
-
-
-
 // Create a custom control for the Map and satellite toggle
 var MapToggleControl = L.control({ position: 'topright' });
-
-
-
 
 // Add control to toggle Map and satellite views
 // MapToggleControl.addTo(Map);
