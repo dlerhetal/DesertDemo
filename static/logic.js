@@ -78,8 +78,24 @@ fetch('data/grocery.json')
 
 // Add markers to the map based on rating
 locations.forEach(function (location) {
+
+    var radius = 6; // Default radius
+
+    // Adjust the radius based on the rating
+    if (location.rating >= 4.5) {
+      radius = 10;
+    } else if (location.rating >= 4) {
+      radius = 8;
+    } else if (location.rating >= 3.5) {
+      radius = 6;
+    } else if (location.rating >= 3) {
+      radius = 4;
+    } else {
+      radius = 2;
+    }
+
     var marker = L.circleMarker([location.latitude, location.longitude], {
-      radius: 6, // Adjust the radius here
+      radius: radius, // Adjust the radius here
       fillColor: getColor(location.rating),
       color: 'white',
       weight: 1,
