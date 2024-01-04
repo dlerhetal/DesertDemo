@@ -13,13 +13,13 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 var link = "data/map.geojson";
 // The function that will determine the color of a NAME_x based on the borough that it belongs to
 function chooseColor(poverty) {
-  if (poverty == 0) return "black";
-  else if (poverty < 2) return "blue";
-  else if (poverty < 4) return "green";
-  else if (poverty < 8) return "yellow";
+  if (poverty == 0) return "Wheat";
+  else if (poverty < 2) return "Goldenrod";
+  else if (poverty < 4) return "Peru";
+  else if (poverty < 8) return "Chocolate";
   else if (poverty < 13) return "orange";
-  else if (poverty < 20) return "red";
-  else return "brown";
+  else if (poverty < 20) return "SaddleBrown";
+  else return "Maroon";
 }
 
 // Getting our GeoJSON data
