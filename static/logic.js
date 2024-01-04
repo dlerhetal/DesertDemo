@@ -185,8 +185,17 @@ function getColor(rating) {
 
 var layers = {};
 
+
+
+
+
+
+
 // Create a custom control for the Map and satellite toggle
 var MapToggleControl = L.control({ position: 'topright' });
+
+
+
 
 // Add control to toggle Map and satellite views
 // MapToggleControl.addTo(Map);
