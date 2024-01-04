@@ -19,8 +19,9 @@ function chooseColor(poverty) {
   else if (poverty < 8) return "yellow";
   else if (poverty < 13) return "orange";
   else if (poverty < 20) return "red";
-  else return "dark red";
+  else return "brown";
 }
+
 // Getting our GeoJSON data
 d3.json(link).then(function(data) {
   // Creating a GeoJSON layer with the retrieved data
@@ -30,7 +31,7 @@ d3.json(link).then(function(data) {
       return {
         color: "white",
         // Call the chooseColor() function to decide which color to color our NAME_x. (The color is based on the borough.)
-        fillColor: chooseColor(feature.properties.NAME_x),
+        fillColor: chooseColor(feature.properties.Poverty),
         fillOpacity: 0.5,
         weight: 3
       };
