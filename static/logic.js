@@ -133,13 +133,13 @@ locations.forEach(function (location) {
 
     // Adjust the radius based on the rating
     if (location.rating >= 4.5) {
-      radius = 10;
+      radius = 11;
     } else if (location.rating >= 4) {
-      radius = 8;
+      radius = 9;
     } else if (location.rating >= 3.5) {
-      radius = 6;
+      radius = 7;
     } else if (location.rating >= 3) {
-      radius = 4;
+      radius = 5;
     } else {
       radius = 3;
     }
