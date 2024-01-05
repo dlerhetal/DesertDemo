@@ -133,15 +133,17 @@ locations.forEach(function (location) {
 
     // Adjust the radius based on the rating
     if (location.rating >= 4.5) {
-      radius = 11;
+      radius = 12;
     } else if (location.rating >= 4) {
-      radius = 9;
+      radius = 10;
     } else if (location.rating >= 3.5) {
-      radius = 7;
+      radius = 8;
     } else if (location.rating >= 3) {
-      radius = 5;
+      radius = 6;
+    } else if (location.rating >= 2) {
+      radius = 4;
     } else {
-      radius = 3;
+      radius = 2;
     }
 
     var marker = L.circleMarker([location.latitude, location.longitude], {
